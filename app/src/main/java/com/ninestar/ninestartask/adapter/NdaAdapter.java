@@ -20,6 +20,7 @@ import java.util.ArrayList;
 public class NdaAdapter extends RecyclerView.Adapter<NdaAdapter.ViewHolder> {
     private Context mContext;
     private ArrayList<DocsItem> ndaList;
+    private static ClickListener clickListener;
 
     public NdaAdapter(Context mContext, ArrayList<DocsItem> ndaList) {
         this.mContext = mContext;
@@ -38,7 +39,7 @@ public class NdaAdapter extends RecyclerView.Adapter<NdaAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull @NotNull NdaAdapter.ViewHolder holder, int position) {
         DocsItem docsItem = ndaList.get(position);
         holder.journal.setText(docsItem.getJournal());
-        holder.journal_date.setText(Utility.dateFormating(docsItem.getPublicationDate()));
+        holder.journal_date.setText(Utility.getDate1(docsItem.getPublicationDate()));
         holder.journal_title.setText(docsItem.getTitleDisplay());
         holder.article_type.setText(docsItem.getArticleType());
     }
@@ -48,7 +49,7 @@ public class NdaAdapter extends RecyclerView.Adapter<NdaAdapter.ViewHolder> {
         return ndaList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView journal;
         private TextView journal_date;
         private TextView journal_title;
@@ -56,10 +57,24 @@ public class NdaAdapter extends RecyclerView.Adapter<NdaAdapter.ViewHolder> {
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this::onClick);
             journal = itemView.findViewById(R.id.tv_journal);
             journal_date = itemView.findViewById(R.id.date);
             journal_title = itemView.findViewById(R.id.title_display);
             article_type = itemView.findViewById(R.id.article_type);
         }
+
+        @Override
+        public void onClick(View v) {
+            clickListener.onItemClick(getAdapterPosition(), v,ndaList.get(getAdapterPosition()));
+        }
+    }
+
+    public void setOnItemClickListener(ClickListener clickListener) {
+        NdaAdapter.clickListener = clickListener;
+    }
+
+    public interface ClickListener {
+        void onItemClick(int position, View v, DocsItem docsItem);
     }
 }

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -15,6 +16,7 @@ import com.ninestar.ninestartask.adapter.NdaAdapter;
 import com.ninestar.ninestartask.model.DocsItem;
 import com.ninestar.ninestartask.viewmodel.NdaViewModel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +40,14 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         initialization();
         getNdaDocList();
+        ndaAdapter.setOnItemClickListener(new NdaAdapter.ClickListener() {
+            @Override
+            public void onItemClick(int position, View v, DocsItem docsItem) {
+                Intent intent = new Intent(HomeActivity.this,NDADetailActivity.class);
+                intent.putExtra("doc", (Serializable) docsItem);
+                startActivity(intent);
+            }
+        });
     }
 
     private void initialization() {

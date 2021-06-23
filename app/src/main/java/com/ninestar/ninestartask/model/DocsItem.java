@@ -1,9 +1,10 @@
 package com.ninestar.ninestartask.model;
 
+import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
-public class DocsItem{
+public class DocsItem implements Serializable {
 
 	@SerializedName("score")
 	private double score;
