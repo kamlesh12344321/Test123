@@ -7,5 +7,5 @@ import retrofit2.http.GET;
 
 public interface RestApiService {
     @GET("")
-    Call<NDAResponse> getNdaResponse();
+    Call<NDAResponse> getNdaResponse(String query);
 }
