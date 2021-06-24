@@ -1,6 +1,4 @@
-package com.ninestar.ninestartask.view;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.ninestar.ninestartask.activity;
 
 import android.os.Bundle;
 import android.widget.TextView;
