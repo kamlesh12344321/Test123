@@ -2,9 +2,10 @@ package com.ninestar.ninestartask.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class NDAResponse {
+public class NDAResponse  implements Serializable {
 
 	@SerializedName("response")
 	private NDAResponse response;

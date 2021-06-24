@@ -22,7 +22,7 @@ public class NdaViewModel extends AndroidViewModel {
     public NdaViewModel(@NonNull @NotNull Application application) {
         super(application);
         ndaRepository = new NdaRepository();
-        this.ndaResponseLiveData =ndaRepository.getNdaResponse(QUERY);
+        this.ndaResponseLiveData =ndaRepository.getNdaResponse();
     }
 public LiveData<NDAResponse>getDocItemListLiveData(){
         return ndaResponseLiveData;

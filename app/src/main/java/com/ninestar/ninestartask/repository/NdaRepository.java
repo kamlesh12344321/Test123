@@ -18,9 +18,9 @@ public class NdaRepository {
         apiRequest = RetrofitInstance.getRetrofitInstance().create(RestApiService.class);
     }
 
-    public LiveData<NDAResponse> getNdaResponse(String query) {
+    public LiveData<NDAResponse> getNdaResponse() {
         final MutableLiveData<NDAResponse> data = new MutableLiveData<>();
-        apiRequest.getNdaResponse(query).enqueue(new Callback<NDAResponse>() {
+        apiRequest.getNdaResponse().enqueue(new Callback<NDAResponse>() {
             @Override
             public void onResponse(Call<NDAResponse> call, Response<NDAResponse> response) {
                 if (response.body() != null){

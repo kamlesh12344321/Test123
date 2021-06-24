@@ -58,7 +58,7 @@ public class HomeActivity extends BaseActivity {
         mNdaRecyclerView.hasFixedSize();
         ndaAdapter = new NdaAdapter(HomeActivity.this, ndaArrayList);
         mNdaRecyclerView.setAdapter(ndaAdapter);
-        ndaViewModel = ViewModelProviders.of(this).get(NdaViewModel.class);
+        ndaViewModel = new ViewModelProvider(HomeActivity.this).get(NdaViewModel.class);
 
     }
 
@@ -67,8 +67,10 @@ public class HomeActivity extends BaseActivity {
             if (ndaResponse != null) {
                 mProgressBar.setVisibility(View.GONE);
                 List<DocsItem> ndaList = ndaResponse.getDocs();
-                ndaArrayList.addAll(ndaList);
-                ndaAdapter.notifyDataSetChanged();
+                if (ndaList != null) {
+                    ndaArrayList.addAll(ndaList);
+                    ndaAdapter.notifyDataSetChanged();
+                }
 
             }
         });

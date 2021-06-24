@@ -1,9 +1,13 @@
 package com.ninestar.ninestartask.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.SerializedName;
 
+@Entity(tableName = "nda_items")
 public class DocsItem implements Serializable {
 
 	@SerializedName("score")
@@ -27,6 +31,7 @@ public class DocsItem implements Serializable {
 	@SerializedName("eissn")
 	private String eissn;
 
+	@PrimaryKey
 	@SerializedName("id")
 	private String id;
 
