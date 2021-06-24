@@ -83,7 +83,7 @@ public class HomeActivity extends BaseActivity {
         ndaViewModel.getDocItemListLiveData().observe(this, ndaResponse -> {
             if (ndaResponse != null) {
                 mProgressBar.setVisibility(View.GONE);
-                List<DocsItem> ndaList = ndaResponse.getDocs();
+                List<DocsItem> ndaList = ndaResponse.getResponse().getDocs();
                 if (ndaList != null) {
                     ndaArrayList.addAll(ndaList);
                     ndaAdapter.notifyDataSetChanged();

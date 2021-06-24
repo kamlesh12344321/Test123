@@ -16,14 +16,14 @@ import static com.ninestar.ninestartask.utils.Constants.DATE_FORMAT;
 public class Utility {
 
  public static final String getDate1(String timeStamp){
-     String finalOutPut = "";
+     String finalDate = "";
      if (timeStamp != null && !timeStamp.isEmpty()){
          String[] partedString = timeStamp.split("T");
          String date = partedString[0];
-         final SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
-         finalOutPut = format.format(Date.parse(date));
+         String[] partedDate = date.split("-");
+         finalDate = partedDate[2]+"/"+ partedDate[1]+"/"+ partedDate[0];
      }
-     return finalOutPut;
+     return finalDate;
  }
  public static final String getAuthorString(List<String> authorArray){
      String authorString = "";

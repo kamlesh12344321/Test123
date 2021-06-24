@@ -63,7 +63,6 @@ public class BioMetricActivity extends BaseActivity {
         mAuthButton.setOnClickListener(v -> {
             biometricPrompt.authenticate(promptInfo);
         });
-
     }
 
     @Override

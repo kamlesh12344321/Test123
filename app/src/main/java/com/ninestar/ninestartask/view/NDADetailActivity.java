@@ -9,6 +9,8 @@ import com.ninestar.ninestartask.R;
 import com.ninestar.ninestartask.model.DocsItem;
 import com.ninestar.ninestartask.utils.Utility;
 
+import java.util.stream.Collectors;
+
 public class NDADetailActivity extends BaseActivity {
     private DocsItem docsItem;
     private TextView mJournal, mDate_detail, mArticle_type, mAuthor, mTitle, mDescription;
@@ -31,7 +33,11 @@ public class NDADetailActivity extends BaseActivity {
         mArticle_type.setText(docsItem.getArticleType());
         mAuthor.setText(Utility.getAuthorString(docsItem.getAuthorDisplay()));
         mTitle.setText(docsItem.getTitleDisplay());
-        mDescription.setText((CharSequence) docsItem.getJsonMemberAbstract());
+        String string = "";
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+             string = docsItem.getJsonMemberAbstract().stream().map(Object::toString).collect(Collectors.joining(""));
+        }
+        mDescription.setText(string);
     }
 
     private void initialization() {
