@@ -1,7 +1,6 @@
-package com.ninestar.ninestartask.view;
+package com.ninestar.ninestartask.activity;
 
 import android.os.Bundle;
-import android.view.Menu;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;

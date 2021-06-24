@@ -18,8 +18,7 @@ public class NdaRoomViewModel  extends AndroidViewModel {
     private LiveData<List<DocsItem>> allDocItems;
     public NdaRoomViewModel(@NonNull @NotNull Application application) {
         super(application);
-        ndaRoomRepo = new NdaRoomRepo(application);
-        allDocItems = ndaRoomRepo.getAllNotes();
+//        allDocItems = ndaRoomRepo.getAllNotes();
     }
 
     public void insert(LiveData<List<DocsItem>> docItems){

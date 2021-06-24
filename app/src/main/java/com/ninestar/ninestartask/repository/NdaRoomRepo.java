@@ -12,16 +12,13 @@ import com.ninestar.ninestartask.model.DocsItem;
 import java.util.List;
 
 public class NdaRoomRepo {
-    private NdaDao ndaDao;
     private LiveData<List<DocsItem>> allDocItems;
 
-    public NdaRoomRepo(Application application){
-        NdaDatabase database = NdaDatabase.getInstance(application);
-        ndaDao  = (NdaDao) database.NdaDao();
-        allDocItems = ndaDao.getDocItemList();
+    public NdaRoomRepo(){
+        
     }
     public void insert(LiveData<List<DocsItem>> allDocItems) {
-        new InsertDocItemAsyncTask(ndaDao).execute(allDocItems);
+
     }
 
     public LiveData<List<DocsItem>> getAllNotes() {

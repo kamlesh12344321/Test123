@@ -5,10 +5,14 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.gson.JsonElement;
+import com.ninestar.ninestartask.database.DAO_DocsItem;
+import com.ninestar.ninestartask.database.NdaDatabase;
+import com.ninestar.ninestartask.model.DocsItem;
 import com.ninestar.ninestartask.model.NDAResponse;
 import com.ninestar.ninestartask.network.RestApiService;
 import com.ninestar.ninestartask.network.RetrofitInstance;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
@@ -51,7 +55,18 @@ public class NdaRepository {
                 .map(new Function<NDAResponse, Object>() {
                     @Override
                     public Object apply(NDAResponse response) {
-                        Log.i("", "");
+
+                        List<DocsItem> docsItems = response.getResponse().getDocs();
+                        NdaDatabase db = NdaDatabase.getInstance();
+                        DAO_DocsItem dao_docsItem = db.mDao_docsItem();
+                        List<DocsItem> docsItemsFromDB = dao_docsItem.getDocsItems();
+                        if(docsItemsFromDB != null && docsItemsFromDB.size() > 0) {
+                            dao_docsItem.deleteAll();
+                        }
+                        for(DocsItem item : docsItems) {
+                            dao_docsItem.insertDocItem(item);
+                        }
+
                         return "";
                     }
                 })

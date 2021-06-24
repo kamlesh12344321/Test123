@@ -1,7 +1,6 @@
-package com.ninestar.ninestartask;
+package com.ninestar.ninestartask.activity;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricPrompt;
 import androidx.core.content.ContextCompat;
 
@@ -10,8 +9,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.ninestar.ninestartask.view.BaseActivity;
-import com.ninestar.ninestartask.view.HomeActivity;
+import com.ninestar.ninestartask.R;
 
 import java.util.concurrent.Executor;
 
