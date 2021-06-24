@@ -6,10 +6,13 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.ninestar.ninestartask.R;
 import com.ninestar.ninestartask.adapter.NdaAdapter;
@@ -28,7 +31,7 @@ public class HomeActivity extends BaseActivity {
     private NdaAdapter ndaAdapter;
     private ArrayList<DocsItem> ndaArrayList = new ArrayList<>();
     private NdaViewModel ndaViewModel;
-
+    private TextView mInternetStatusTV;
 
     @Override
     public int getLayoutRes() {
@@ -39,11 +42,16 @@ public class HomeActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initialization();
-        getNdaDocList();
+        if (isConnectionAvailable(HomeActivity.this)) {
+            getNdaDocList();
+        } else {
+            mProgressBar.setVisibility(View.GONE);
+            mInternetStatusTV.setVisibility(View.VISIBLE);
+        }
         ndaAdapter.setOnItemClickListener(new NdaAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View v, DocsItem docsItem) {
-                Intent intent = new Intent(HomeActivity.this,NDADetailActivity.class);
+                Intent intent = new Intent(HomeActivity.this, NDADetailActivity.class);
                 intent.putExtra("doc", (Serializable) docsItem);
                 startActivity(intent);
             }
@@ -53,6 +61,7 @@ public class HomeActivity extends BaseActivity {
     private void initialization() {
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         mNdaRecyclerView = findViewById(R.id.nda_recycler_view);
+        mInternetStatusTV = findViewById(R.id.tv_internet);
         layoutManager = new LinearLayoutManager(HomeActivity.this);
         mNdaRecyclerView.setLayoutManager(layoutManager);
         mNdaRecyclerView.hasFixedSize();
@@ -71,8 +80,20 @@ public class HomeActivity extends BaseActivity {
                     ndaArrayList.addAll(ndaList);
                     ndaAdapter.notifyDataSetChanged();
                 }
-
             }
         });
+    }
+
+    private boolean isConnectionAvailable(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (isConnectionAvailable(getApplicationContext())) {
+            mInternetStatusTV.setVisibility(View.GONE);
+        }
     }
 }
