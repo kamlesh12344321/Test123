@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.ninestar.ninestartask.R;
 import com.ninestar.ninestartask.adapter.NdaAdapter;
 import com.ninestar.ninestartask.model.DocsItem;
+import com.ninestar.ninestartask.repository.NdaRepository;
 import com.ninestar.ninestartask.viewmodel.NdaViewModel;
 
 import java.io.Serializable;
@@ -56,6 +57,13 @@ public class HomeActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+        test();
+    }
+
+
+    private void test() {
+        NdaRepository testRepo = new NdaRepository();
+        testRepo.getData();
     }
 
     private void initialization() {
