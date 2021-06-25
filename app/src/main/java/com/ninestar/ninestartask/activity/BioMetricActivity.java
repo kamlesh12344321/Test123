@@ -51,7 +51,7 @@ public class BioMetricActivity extends BaseActivity {
                 Toast.makeText(BioMetricActivity.this, "Authentication failed !!! : ", Toast.LENGTH_LONG).show();
             }
         });
-
+        // Creating dialog prompt for fingerprint
         mPromptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Biometric Authentication")
                 .setSubtitle("Login using fingerprint authentication")

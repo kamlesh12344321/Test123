@@ -17,6 +17,7 @@ import com.ninestar.ninestartask.R;
 import com.ninestar.ninestartask.adapter.NdaAdapter;
 import com.ninestar.ninestartask.database.NdaDatabase;
 import com.ninestar.ninestartask.model.DocsItem;
+import com.ninestar.ninestartask.utils.Constants;
 import com.ninestar.ninestartask.viewmodel.NdaViewModel;
 
 import java.io.Serializable;
@@ -43,6 +44,7 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         initialization();
         if (isConnectionAvailable(HomeActivity.this)) {
+            // Reading DocItem data from database
             getDatabaseDocItems();
         } else {
             mProgressBar.setVisibility(View.GONE);
@@ -50,7 +52,7 @@ public class HomeActivity extends BaseActivity {
         }
         mNdaAdapter.setOnItemClickListener((position, v, docsItem) -> {
             Intent intent = new Intent(HomeActivity.this, NDADetailActivity.class);
-            intent.putExtra("doc", (Serializable) docsItem);
+            intent.putExtra(Constants.KEY_DOC_INTENT, (Serializable) docsItem);
             startActivity(intent);
         });
     }
@@ -65,7 +67,6 @@ public class HomeActivity extends BaseActivity {
         mNdaAdapter = new NdaAdapter(HomeActivity.this, mNdaArrayList);
         mNdaRecyclerView.setAdapter(mNdaAdapter);
         mNdaViewModel = new ViewModelProvider(HomeActivity.this).get(NdaViewModel.class);
-
     }
 
     private boolean isConnectionAvailable(Context context) {

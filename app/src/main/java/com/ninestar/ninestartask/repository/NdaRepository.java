@@ -40,6 +40,7 @@ public class NdaRepository {
             public void onResponse(Call<NDAResponse> call, Response<NDAResponse> response) {
                 if (response.body() != null) {
                     data.setValue(response.body());
+                    // Inserting api response to database
                     insertData(response.body());
                 }
             }
