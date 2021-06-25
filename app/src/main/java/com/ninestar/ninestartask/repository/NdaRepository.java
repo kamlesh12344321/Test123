@@ -12,9 +12,13 @@ import com.ninestar.ninestartask.model.NDAResponse;
 import com.ninestar.ninestartask.network.RestApiService;
 import com.ninestar.ninestartask.network.RetrofitInstance;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
@@ -24,6 +28,7 @@ import retrofit2.Response;
 
 public class NdaRepository {
     private RestApiService apiRequest;
+
 
     public NdaRepository() {
         apiRequest = RetrofitInstance.getRetrofitInstance().create(RestApiService.class);
@@ -36,6 +41,7 @@ public class NdaRepository {
             public void onResponse(Call<NDAResponse> call, Response<NDAResponse> response) {
                 if (response.body() != null){
                     data.setValue(response.body());
+                    insertData(response.body());
                 }
             }
 
@@ -47,6 +53,46 @@ public class NdaRepository {
         });
         return data;
     }
+
+    public void insertData(NDAResponse ndaResponse){
+        Observable<NDAResponse> observable;
+        observable = Observable.just(ndaResponse);
+        observable.subscribeOn(Schedulers.io()).subscribe(new Observer<NDAResponse>() {
+            @Override
+            public void onSubscribe(@NotNull Disposable d) {
+                Log.i("", "");
+            }
+
+            @Override
+            public void onNext(@NotNull NDAResponse ndaResponse) {
+                List<DocsItem> docsItems = ndaResponse.getResponse().getDocs();
+                NdaDatabase db = NdaDatabase.getInstance();
+                DAO_DocsItem dao_docsItem = db.mDao_docsItem();
+                List<DocsItem> docsItemsFromDB = dao_docsItem.getDocsItems();
+                if(docsItemsFromDB != null && docsItemsFromDB.size() > 0) {
+                    dao_docsItem.deleteAll();
+                }
+                for(DocsItem item : docsItems) {
+                    dao_docsItem.insertDocItem(item);
+                }
+
+
+            }
+
+            @Override
+            public void onError(@NotNull Throwable e) {
+                Log.i("", "");
+            }
+
+            @Override
+            public void onComplete() {
+                Log.i("", "");
+            }
+        });
+    }
+
+
+
 
 
     public void getData() {

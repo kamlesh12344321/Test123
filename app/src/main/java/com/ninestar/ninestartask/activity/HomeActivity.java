@@ -1,5 +1,7 @@
 package com.ninestar.ninestartask.activity;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 
 import com.ninestar.ninestartask.R;
 import com.ninestar.ninestartask.adapter.NdaAdapter;
+import com.ninestar.ninestartask.database.NdaDatabase;
 import com.ninestar.ninestartask.model.DocsItem;
 import com.ninestar.ninestartask.repository.NdaRepository;
 import com.ninestar.ninestartask.viewmodel.NdaViewModel;
@@ -42,20 +45,18 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         initialization();
         if (isConnectionAvailable(HomeActivity.this)) {
-            getNdaDocList();
+//            getNdaDocList();
+            getDatabaseDocItems();
         } else {
             mProgressBar.setVisibility(View.GONE);
             mInternetStatusTV.setVisibility(View.VISIBLE);
         }
-        ndaAdapter.setOnItemClickListener(new NdaAdapter.ClickListener() {
-            @Override
-            public void onItemClick(int position, View v, DocsItem docsItem) {
-                Intent intent = new Intent(HomeActivity.this, NDADetailActivity.class);
-                intent.putExtra("doc", (Serializable) docsItem);
-                startActivity(intent);
-            }
+        ndaAdapter.setOnItemClickListener((position, v, docsItem) -> {
+            Intent intent = new Intent(HomeActivity.this, NDADetailActivity.class);
+            intent.putExtra("doc", (Serializable) docsItem);
+            startActivity(intent);
         });
-        test();
+//        test();
     }
 
 
@@ -101,5 +102,21 @@ public class HomeActivity extends BaseActivity {
         if (isConnectionAvailable(getApplicationContext())) {
             mInternetStatusTV.setVisibility(View.GONE);
         }
+    }
+
+    public void getDatabaseDocItems() {
+        MutableLiveData<List<DocsItem>> docListData = new MutableLiveData<>();
+        NdaDatabase ndaDatabase;
+        ndaDatabase = NdaDatabase.getInstance();
+        ndaDatabase.mDao_docsItem().getAllDocData().observe(this, docsItems -> {
+            if (!docsItems.isEmpty()) {
+                mProgressBar.setVisibility(View.GONE);
+                List<DocsItem> ndaList = docsItems;
+                ndaArrayList.addAll(ndaList);
+                ndaAdapter.notifyDataSetChanged();
+
+            }
+        });
+
     }
 }

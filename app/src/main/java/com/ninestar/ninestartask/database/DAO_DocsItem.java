@@ -1,5 +1,6 @@
 package com.ninestar.ninestartask.database;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -19,4 +20,7 @@ public interface DAO_DocsItem {
 
     @Query("DELETE FROM DocsItem")
     void deleteAll();
+
+    @Query("SELECT * FROM DocsItem")
+    LiveData<List<DocsItem>> getAllDocData();
 }
