@@ -19,12 +19,12 @@ import java.util.ArrayList;
 
 public class NdaAdapter extends RecyclerView.Adapter<NdaAdapter.ViewHolder> {
     private Context mContext;
-    private ArrayList<DocsItem> ndaList;
-    private static ClickListener clickListener;
+    private ArrayList<DocsItem> mNdaList;
+    private static ClickListener mClickListener;
 
     public NdaAdapter(Context mContext, ArrayList<DocsItem> ndaList) {
         this.mContext = mContext;
-        this.ndaList = ndaList;
+        this.mNdaList = ndaList;
     }
 
     @NonNull
@@ -37,7 +37,7 @@ public class NdaAdapter extends RecyclerView.Adapter<NdaAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull NdaAdapter.ViewHolder holder, int position) {
-        DocsItem docsItem = ndaList.get(position);
+        DocsItem docsItem = mNdaList.get(position);
         holder.journal.setText(docsItem.getJournal());
         holder.journal_date.setText(Utility.getDate1(docsItem.getPublicationDate()));
         holder.journal_title.setText(docsItem.getTitleDisplay());
@@ -46,10 +46,10 @@ public class NdaAdapter extends RecyclerView.Adapter<NdaAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return ndaList.size();
+        return mNdaList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView journal;
         private TextView journal_date;
         private TextView journal_title;
@@ -66,12 +66,12 @@ public class NdaAdapter extends RecyclerView.Adapter<NdaAdapter.ViewHolder> {
 
         @Override
         public void onClick(View v) {
-            clickListener.onItemClick(getAdapterPosition(), v,ndaList.get(getAdapterPosition()));
+            mClickListener.onItemClick(getAdapterPosition(), v, mNdaList.get(getAdapterPosition()));
         }
     }
 
     public void setOnItemClickListener(ClickListener clickListener) {
-        NdaAdapter.clickListener = clickListener;
+        NdaAdapter.mClickListener = clickListener;
     }
 
     public interface ClickListener {

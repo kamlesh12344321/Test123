@@ -29,7 +29,6 @@ import retrofit2.Response;
 public class NdaRepository {
     private RestApiService apiRequest;
 
-
     public NdaRepository() {
         apiRequest = RetrofitInstance.getRetrofitInstance().create(RestApiService.class);
     }
@@ -39,7 +38,7 @@ public class NdaRepository {
         apiRequest.getNdaResponse().enqueue(new Callback<NDAResponse>() {
             @Override
             public void onResponse(Call<NDAResponse> call, Response<NDAResponse> response) {
-                if (response.body() != null){
+                if (response.body() != null) {
                     data.setValue(response.body());
                     insertData(response.body());
                 }
@@ -54,7 +53,7 @@ public class NdaRepository {
         return data;
     }
 
-    public void insertData(NDAResponse ndaResponse){
+    public void insertData(NDAResponse ndaResponse) {
         Observable<NDAResponse> observable;
         observable = Observable.just(ndaResponse);
         observable.subscribeOn(Schedulers.io()).subscribe(new Observer<NDAResponse>() {
@@ -69,10 +68,10 @@ public class NdaRepository {
                 NdaDatabase db = NdaDatabase.getInstance();
                 DAO_DocsItem dao_docsItem = db.mDao_docsItem();
                 List<DocsItem> docsItemsFromDB = dao_docsItem.getDocsItems();
-                if(docsItemsFromDB != null && docsItemsFromDB.size() > 0) {
+                if (docsItemsFromDB != null && docsItemsFromDB.size() > 0) {
                     dao_docsItem.deleteAll();
                 }
-                for(DocsItem item : docsItems) {
+                for (DocsItem item : docsItems) {
                     dao_docsItem.insertDocItem(item);
                 }
 
@@ -89,46 +88,6 @@ public class NdaRepository {
                 Log.i("", "");
             }
         });
-    }
-
-
-
-
-
-    public void getData() {
-        Observable<NDAResponse> observable = apiRequest.getNdaResponsee("http://api.plos.org/search?q=title:DNA");
-        observable.subscribeOn(Schedulers.newThread())
-                .map(new Function<NDAResponse, Object>() {
-                    @Override
-                    public Object apply(NDAResponse response) {
-
-                        List<DocsItem> docsItems = response.getResponse().getDocs();
-                        NdaDatabase db = NdaDatabase.getInstance();
-                        DAO_DocsItem dao_docsItem = db.mDao_docsItem();
-                        List<DocsItem> docsItemsFromDB = dao_docsItem.getDocsItems();
-                        if(docsItemsFromDB != null && docsItemsFromDB.size() > 0) {
-                            dao_docsItem.deleteAll();
-                        }
-                        for(DocsItem item : docsItems) {
-                            dao_docsItem.insertDocItem(item);
-                        }
-
-                        return "";
-                    }
-                })
-                .subscribe(new Consumer<Object>() {
-                    @Override
-                    public void accept(Object o) {
-                        Log.i("", "");
-                    }
-                }, new Consumer<Throwable>() {
-                    @Override
-                    public void accept(Throwable throwable) {
-                        Log.i("", "");
-                    }
-                }, () -> {
-                    Log.i("", "");
-                });
     }
 
 }

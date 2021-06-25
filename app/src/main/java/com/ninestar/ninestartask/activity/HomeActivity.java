@@ -1,6 +1,5 @@
 package com.ninestar.ninestartask.activity;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,7 +17,6 @@ import com.ninestar.ninestartask.R;
 import com.ninestar.ninestartask.adapter.NdaAdapter;
 import com.ninestar.ninestartask.database.NdaDatabase;
 import com.ninestar.ninestartask.model.DocsItem;
-import com.ninestar.ninestartask.repository.NdaRepository;
 import com.ninestar.ninestartask.viewmodel.NdaViewModel;
 
 import java.io.Serializable;
@@ -29,10 +27,10 @@ public class HomeActivity extends BaseActivity {
 
     private RecyclerView mNdaRecyclerView;
     private ProgressBar mProgressBar;
-    private LinearLayoutManager layoutManager;
-    private NdaAdapter ndaAdapter;
-    private ArrayList<DocsItem> ndaArrayList = new ArrayList<>();
-    private NdaViewModel ndaViewModel;
+    private LinearLayoutManager mLayoutManager;
+    private NdaAdapter mNdaAdapter;
+    private ArrayList<DocsItem> mNdaArrayList = new ArrayList<>();
+    private NdaViewModel mNdaViewModel;
     private TextView mInternetStatusTV;
 
     @Override
@@ -45,50 +43,29 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         initialization();
         if (isConnectionAvailable(HomeActivity.this)) {
-//            getNdaDocList();
             getDatabaseDocItems();
         } else {
             mProgressBar.setVisibility(View.GONE);
             mInternetStatusTV.setVisibility(View.VISIBLE);
         }
-        ndaAdapter.setOnItemClickListener((position, v, docsItem) -> {
+        mNdaAdapter.setOnItemClickListener((position, v, docsItem) -> {
             Intent intent = new Intent(HomeActivity.this, NDADetailActivity.class);
             intent.putExtra("doc", (Serializable) docsItem);
             startActivity(intent);
         });
-//        test();
-    }
-
-
-    private void test() {
-        NdaRepository testRepo = new NdaRepository();
-        testRepo.getData();
     }
 
     private void initialization() {
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar);
         mNdaRecyclerView = findViewById(R.id.nda_recycler_view);
         mInternetStatusTV = findViewById(R.id.tv_internet);
-        layoutManager = new LinearLayoutManager(HomeActivity.this);
-        mNdaRecyclerView.setLayoutManager(layoutManager);
+        mLayoutManager = new LinearLayoutManager(HomeActivity.this);
+        mNdaRecyclerView.setLayoutManager(mLayoutManager);
         mNdaRecyclerView.hasFixedSize();
-        ndaAdapter = new NdaAdapter(HomeActivity.this, ndaArrayList);
-        mNdaRecyclerView.setAdapter(ndaAdapter);
-        ndaViewModel = new ViewModelProvider(HomeActivity.this).get(NdaViewModel.class);
+        mNdaAdapter = new NdaAdapter(HomeActivity.this, mNdaArrayList);
+        mNdaRecyclerView.setAdapter(mNdaAdapter);
+        mNdaViewModel = new ViewModelProvider(HomeActivity.this).get(NdaViewModel.class);
 
-    }
-
-    private void getNdaDocList() {
-        ndaViewModel.getDocItemListLiveData().observe(this, ndaResponse -> {
-            if (ndaResponse != null) {
-                mProgressBar.setVisibility(View.GONE);
-                List<DocsItem> ndaList = ndaResponse.getResponse().getDocs();
-                if (ndaList != null) {
-                    ndaArrayList.addAll(ndaList);
-                    ndaAdapter.notifyDataSetChanged();
-                }
-            }
-        });
     }
 
     private boolean isConnectionAvailable(Context context) {
@@ -105,15 +82,14 @@ public class HomeActivity extends BaseActivity {
     }
 
     public void getDatabaseDocItems() {
-        MutableLiveData<List<DocsItem>> docListData = new MutableLiveData<>();
         NdaDatabase ndaDatabase;
         ndaDatabase = NdaDatabase.getInstance();
         ndaDatabase.mDao_docsItem().getAllDocData().observe(this, docsItems -> {
             if (!docsItems.isEmpty()) {
                 mProgressBar.setVisibility(View.GONE);
                 List<DocsItem> ndaList = docsItems;
-                ndaArrayList.addAll(ndaList);
-                ndaAdapter.notifyDataSetChanged();
+                mNdaArrayList.addAll(ndaList);
+                mNdaAdapter.notifyDataSetChanged();
 
             }
         });

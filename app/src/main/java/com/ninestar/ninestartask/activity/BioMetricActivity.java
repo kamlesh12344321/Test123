@@ -16,9 +16,9 @@ import java.util.concurrent.Executor;
 public class BioMetricActivity extends BaseActivity {
 
     private Button mAuthButton;
-    private Executor executor;
-    private androidx.biometric.BiometricPrompt biometricPrompt;
-    private BiometricPrompt.PromptInfo promptInfo;
+    private Executor mExecutor;
+    private androidx.biometric.BiometricPrompt mBiometricPrompt;
+    private BiometricPrompt.PromptInfo mPromptInfo;
 
     @Override
     public int getLayoutRes() {
@@ -30,8 +30,8 @@ public class BioMetricActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         mAuthButton = findViewById(R.id.authentication_button);
-        executor = ContextCompat.getMainExecutor(this);
-        biometricPrompt = new BiometricPrompt(BioMetricActivity.this, executor, new BiometricPrompt.AuthenticationCallback() {
+        mExecutor = ContextCompat.getMainExecutor(this);
+        mBiometricPrompt = new BiometricPrompt(BioMetricActivity.this, mExecutor, new BiometricPrompt.AuthenticationCallback() {
             @Override
             public void onAuthenticationError(int errorCode, @NonNull @org.jetbrains.annotations.NotNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
@@ -52,21 +52,21 @@ public class BioMetricActivity extends BaseActivity {
             }
         });
 
-        promptInfo = new BiometricPrompt.PromptInfo.Builder()
+        mPromptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Biometric Authentication")
                 .setSubtitle("Login using fingerprint authentication")
                 .setNegativeButtonText("Cancel")
                 .build();
 
         mAuthButton.setOnClickListener(v -> {
-            biometricPrompt.authenticate(promptInfo);
+            mBiometricPrompt.authenticate(mPromptInfo);
         });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        biometricPrompt.authenticate(promptInfo);
+        mBiometricPrompt.authenticate(mPromptInfo);
     }
 
 }

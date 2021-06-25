@@ -15,7 +15,7 @@ import com.ninestar.ninestartask.model.ModelConverterForTable;
 
 import org.jetbrains.annotations.NotNull;
 
-@Database(entities = {DocsItem.class},version = 1, exportSchema = false)
+@Database(entities = {DocsItem.class}, version = 1, exportSchema = false)
 @TypeConverters({ModelConverterForTable.class})
 public abstract class NdaDatabase extends RoomDatabase {
 
@@ -36,10 +36,10 @@ public abstract class NdaDatabase extends RoomDatabase {
         return s_INSTANCE;
     }
 
-     public static  RoomDatabase.Callback roomCallback = new RoomDatabase.Callback(){
-         @Override
-         public void onCreate(@NonNull @NotNull SupportSQLiteDatabase db) {
-             super.onCreate(db);
-         }
-     };
+    public static RoomDatabase.Callback roomCallback = new RoomDatabase.Callback() {
+        @Override
+        public void onCreate(@NonNull @NotNull SupportSQLiteDatabase db) {
+            super.onCreate(db);
+        }
+    };
 }

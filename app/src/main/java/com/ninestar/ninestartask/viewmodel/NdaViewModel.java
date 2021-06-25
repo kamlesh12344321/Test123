@@ -18,13 +18,15 @@ import static com.ninestar.ninestartask.utils.Constants.QUERY;
 
 public class NdaViewModel extends AndroidViewModel {
     private NdaRepository ndaRepository;
-    private LiveData<NDAResponse>ndaResponseLiveData;
+    private LiveData<NDAResponse> ndaResponseLiveData;
+
     public NdaViewModel(@NonNull @NotNull Application application) {
         super(application);
         ndaRepository = new NdaRepository();
-        this.ndaResponseLiveData =ndaRepository.getNdaResponse();
+        this.ndaResponseLiveData = ndaRepository.getNdaResponse();
     }
-public LiveData<NDAResponse>getDocItemListLiveData(){
+
+    public LiveData<NDAResponse> getDocItemListLiveData() {
         return ndaResponseLiveData;
-}
+    }
 }

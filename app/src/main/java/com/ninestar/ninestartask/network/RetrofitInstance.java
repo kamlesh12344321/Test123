@@ -8,7 +8,8 @@ import static com.ninestar.ninestartask.utils.Constants.BASE_URL;
 
 public class RetrofitInstance {
     private static Retrofit retrofit;
-    public static Retrofit getRetrofitInstance(){
+
+    public static Retrofit getRetrofitInstance() {
         if (retrofit == null) {
             retrofit = new Retrofit
                     .Builder()

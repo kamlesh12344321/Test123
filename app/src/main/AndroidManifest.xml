@@ -15,9 +15,8 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/Theme.NineStarTask">
         <activity android:name=".activity.NDADetailActivity"></activity>
-<!--        <activity android:name=".view.HomeActivity" />-->
-        <!--<activity android:name=".BioMetricActivity">-->
-        <activity android:name=".activity.HomeActivity">
+        <activity android:name=".activity.HomeActivity" />
+        <activity android:name=".activity.BioMetricActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

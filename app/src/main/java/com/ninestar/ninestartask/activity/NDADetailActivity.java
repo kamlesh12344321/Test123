@@ -10,7 +10,7 @@ import com.ninestar.ninestartask.utils.Utility;
 import java.util.stream.Collectors;
 
 public class NDADetailActivity extends BaseActivity {
-    private DocsItem docsItem;
+    private DocsItem mDocsItem;
     private TextView mJournal, mDate_detail, mArticle_type, mAuthor, mTitle, mDescription;
 
     @Override
@@ -26,21 +26,21 @@ public class NDADetailActivity extends BaseActivity {
     }
 
     private void fillData() {
-        mJournal.setText(docsItem.getJournal());
-        mDate_detail.setText(Utility.getDate1(docsItem.getPublicationDate()));
-        mArticle_type.setText(docsItem.getArticleType());
-        mAuthor.setText(Utility.getAuthorString(docsItem.getAuthorDisplay()));
-        mTitle.setText(docsItem.getTitleDisplay());
+        mJournal.setText(mDocsItem.getJournal());
+        mDate_detail.setText(Utility.getDate1(mDocsItem.getPublicationDate()));
+        mArticle_type.setText(mDocsItem.getArticleType());
+        mAuthor.setText(Utility.getAuthorString(mDocsItem.getAuthorDisplay()));
+        mTitle.setText(mDocsItem.getTitleDisplay());
         String string = "";
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-             string = docsItem.getJsonMemberAbstract().stream().map(Object::toString).collect(Collectors.joining(""));
+             string = mDocsItem.getJsonMemberAbstract().stream().map(Object::toString).collect(Collectors.joining(""));
         }
         mDescription.setText(string);
     }
 
     private void initialization() {
         if (getIntent() != null) {
-            docsItem = (DocsItem) getIntent().getSerializableExtra("doc");
+            mDocsItem = (DocsItem) getIntent().getSerializableExtra("doc");
         }
         mJournal = findViewById(R.id.tv_journal);
         mDate_detail = findViewById(R.id.tv_date_detail);

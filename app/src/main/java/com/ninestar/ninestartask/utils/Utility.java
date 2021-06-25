@@ -15,21 +15,22 @@ import static com.ninestar.ninestartask.utils.Constants.DATE_FORMAT;
 
 public class Utility {
 
- public static final String getDate1(String timeStamp){
-     String finalDate = "";
-     if (timeStamp != null && !timeStamp.isEmpty()){
-         String[] partedString = timeStamp.split("T");
-         String date = partedString[0];
-         String[] partedDate = date.split("-");
-         finalDate = partedDate[2]+"/"+ partedDate[1]+"/"+ partedDate[0];
-     }
-     return finalDate;
- }
- public static final String getAuthorString(List<String> authorArray){
-     String authorString = "";
-     for (String author : authorArray){
-         authorString = authorString + author + ", ";
-     }
-     return authorString;
- }
+    public static final String getDate1(String timeStamp) {
+        String finalDate = "";
+        if (timeStamp != null && !timeStamp.isEmpty()) {
+            String[] partedString = timeStamp.split("T");
+            String date = partedString[0];
+            String[] partedDate = date.split("-");
+            finalDate = partedDate[2] + "/" + partedDate[1] + "/" + partedDate[0];
+        }
+        return finalDate;
+    }
+
+    public static final String getAuthorString(List<String> authorArray) {
+        String authorString = "";
+        for (String author : authorArray) {
+            authorString = authorString + author + ", ";
+        }
+        return authorString;
+    }
 }
