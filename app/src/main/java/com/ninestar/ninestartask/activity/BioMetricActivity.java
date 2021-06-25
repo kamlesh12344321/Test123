@@ -31,6 +31,8 @@ public class BioMetricActivity extends BaseActivity {
 
         mAuthButton = findViewById(R.id.authentication_button);
         mExecutor = ContextCompat.getMainExecutor(this);
+        /*Biometric authentication listener using authentication prompt to get
+        * fingerprint authentication result */
         mBiometricPrompt = new BiometricPrompt(BioMetricActivity.this, mExecutor, new BiometricPrompt.AuthenticationCallback() {
             @Override
             public void onAuthenticationError(int errorCode, @NonNull @org.jetbrains.annotations.NotNull CharSequence errString) {
@@ -51,7 +53,8 @@ public class BioMetricActivity extends BaseActivity {
                 Toast.makeText(BioMetricActivity.this, "Authentication failed !!! : ", Toast.LENGTH_LONG).show();
             }
         });
-        // Creating dialog prompt for fingerprint
+
+        /* Creating biometric fingerprint authentication prompt */
         mPromptInfo = new BiometricPrompt.PromptInfo.Builder()
                 .setTitle("Biometric Authentication")
                 .setSubtitle("Login using fingerprint authentication")

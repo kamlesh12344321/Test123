@@ -7,9 +7,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.List;
-
 public class ModelConverterForTable {
-
     @TypeConverter
     public static List<String> stringToList(String value) {
         Type listType = new TypeToken<List<String>>() {

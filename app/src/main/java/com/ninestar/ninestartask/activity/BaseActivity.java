@@ -8,6 +8,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.ninestar.ninestartask.R;
 
+/* Creating baseActivity to give common toolbar and action */
 public abstract class BaseActivity extends AppCompatActivity {
     public abstract int getLayoutRes();
     private Toolbar mToolbar;

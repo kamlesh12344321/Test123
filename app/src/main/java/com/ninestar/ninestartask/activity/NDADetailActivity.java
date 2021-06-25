@@ -40,7 +40,7 @@ public class NDADetailActivity extends BaseActivity {
     }
 
     private void initialization() {
-        // Taking DocItem data from docItem list
+        /* Getting DocItem intent data for detail screen setting data to relevant item */
         if (getIntent() != null) {
             mDocsItem = (DocsItem) getIntent().getSerializableExtra(Constants.KEY_DOC_INTENT);
         }

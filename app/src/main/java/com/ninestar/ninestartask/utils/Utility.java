@@ -14,7 +14,7 @@ import java.util.List;
 import static com.ninestar.ninestartask.utils.Constants.DATE_FORMAT;
 
 public class Utility {
-
+    /* Splitting date string from time stamp string */
     public static final String getDate1(String timeStamp) {
         String finalDate = "";
         if (timeStamp != null && !timeStamp.isEmpty()) {
@@ -25,7 +25,7 @@ public class Utility {
         }
         return finalDate;
     }
-
+     /* Converting author list to single string object*/
     public static final String getAuthorString(List<String> authorArray) {
         String authorString = "";
         for (String author : authorArray) {

@@ -44,7 +44,6 @@ public class HomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         initialization();
         if (isConnectionAvailable(HomeActivity.this)) {
-            // Reading DocItem data from database
             getDatabaseDocItems();
         } else {
             mProgressBar.setVisibility(View.GONE);
@@ -66,9 +65,11 @@ public class HomeActivity extends BaseActivity {
         mNdaRecyclerView.hasFixedSize();
         mNdaAdapter = new NdaAdapter(HomeActivity.this, mNdaArrayList);
         mNdaRecyclerView.setAdapter(mNdaAdapter);
+        /* Initializing NDAViewModel to making API call */
         mNdaViewModel = new ViewModelProvider(HomeActivity.this).get(NdaViewModel.class);
     }
 
+    /* Checking internet connection availability */
     private boolean isConnectionAvailable(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
@@ -81,7 +82,7 @@ public class HomeActivity extends BaseActivity {
             mInternetStatusTV.setVisibility(View.GONE);
         }
     }
-
+    /* Observing DocItem from database and loading to recyclerView */
     public void getDatabaseDocItems() {
         NdaDatabase ndaDatabase;
         ndaDatabase = NdaDatabase.getInstance();

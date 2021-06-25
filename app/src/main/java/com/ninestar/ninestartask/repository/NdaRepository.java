@@ -32,7 +32,7 @@ public class NdaRepository {
     public NdaRepository() {
         apiRequest = RetrofitInstance.getRetrofitInstance().create(RestApiService.class);
     }
-
+    /* Making API call and getting response output and storing in mutable livedata */
     public LiveData<NDAResponse> getNdaResponse() {
         final MutableLiveData<NDAResponse> data = new MutableLiveData<>();
         apiRequest.getNdaResponse().enqueue(new Callback<NDAResponse>() {
@@ -40,7 +40,6 @@ public class NdaRepository {
             public void onResponse(Call<NDAResponse> call, Response<NDAResponse> response) {
                 if (response.body() != null) {
                     data.setValue(response.body());
-                    // Inserting api response to database
                     insertData(response.body());
                 }
             }
@@ -53,7 +52,7 @@ public class NdaRepository {
         });
         return data;
     }
-
+    /* Storing NdaResponse to database in form of DocItem list*/
     public void insertData(NDAResponse ndaResponse) {
         Observable<NDAResponse> observable;
         observable = Observable.just(ndaResponse);

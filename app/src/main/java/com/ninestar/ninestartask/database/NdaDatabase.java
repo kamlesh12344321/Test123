@@ -23,7 +23,7 @@ public abstract class NdaDatabase extends RoomDatabase {
 
     public abstract DAO_DocsItem mDao_docsItem();
 
-
+    /* Creating instance of ndaDatabase object and building database */
     public static NdaDatabase getInstance() {
         if (s_INSTANCE == null) {
             synchronized (NdaDatabase.class) {

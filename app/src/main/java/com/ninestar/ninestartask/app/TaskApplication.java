@@ -12,7 +12,7 @@ public class TaskApplication extends Application {
         super.onCreate();
         sContext = this;
     }
-
+    /* Crating application context */
     public static Context getContext() {
         return sContext;
     }
